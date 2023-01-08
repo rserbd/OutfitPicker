@@ -11,6 +11,7 @@
         android:theme="@style/Theme.OutfitPicker">
         <activity
             android:name=".UpdateActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".AddActivity"
