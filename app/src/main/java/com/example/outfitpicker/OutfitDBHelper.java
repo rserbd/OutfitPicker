@@ -19,7 +19,7 @@ public class OutfitDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TITLE = "outfit_title";
     private static final String COLUMN_NR_PIECES = "outfit_nr_pieces";
 
-    public OutfitDBHelper(@Nullable Context context) {
+    OutfitDBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -65,5 +65,24 @@ public class OutfitDBHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    void updateData(String row_id, String title, String pieces) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, title);
+        cv.put(COLUMN_NR_PIECES, pieces);
+
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+        if(result == -1) {
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Updated Successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void deleteAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 }

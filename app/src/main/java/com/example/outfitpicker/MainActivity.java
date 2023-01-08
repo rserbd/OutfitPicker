@@ -1,5 +1,6 @@
 package com.example.outfitpicker;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,9 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this, outfit_id, outfit_title, outfit_pieces);
+        customAdapter = new CustomAdapter(MainActivity.this,this, outfit_id, outfit_title, outfit_pieces);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            recreate();
+        }
     }
 
     void storeDataInArrays() {
